@@ -1,0 +1,2 @@
+# gotraining
+Training exercise
