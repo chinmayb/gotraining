@@ -7,21 +7,37 @@ import (
 )
 
 type Matrix struct {
-	Id     int
+	Id     int //dont use ID, since its not the idea of Matrix
 	matrix [][]int
 }
 type Matrices []Matrix
 
 var id int = 1
 
-func generate_random_num() int {
-	return rand.Intn(100)
+// New creates a new matrix
+func New(r int, c int) Matrix {
+	fmt.Print("Creating....")
+	ss := make([][]int, r)
+	for i := range ss {
+		ss[i] = make([]int, c)
+	}
+	defer increment()
+	return Matrix{Id: id, matrix: ss}
 }
-func (m Matrix) getCords() (int, int) {
+
+func (m *Matrix) getCords() (int, int) {
 	return len(m.matrix), len(m.matrix[0])
 }
 
-func (m Matrix) Show() {
+func (m *Matrix) Get(r int, c int) int {
+	rws, col := m.getCords()
+	if r < rws && r >= 0 && c < col && c >= 0 {
+		return m.matrix[r][c]
+	}
+	return -1
+}
+
+func (m *Matrix) Show() {
 	fmt.Println("\n=================================")
 	fmt.Println("id      :  ", m.Id)
 	fmt.Print("Matrix  :  ")
@@ -33,32 +49,46 @@ func (m Matrix) Show() {
 		}
 	}
 }
-
-func List() {
-
-}
-func increment() {
-	id++
-}
-
-func New(r int, c int) Matrix {
-	fmt.Print("Creating....")
-	ss := make([][]int, r)
-	for i := range ss {
-		ss[i] = make([]int, c)
+func (m *Matrix) Set(r int, c int, v int) bool {
+	r_m, c_m := m.getCords()
+	if r > r_m-1 || c > c_m {
+		return false
 	}
-	defer increment()
-	return Matrix{Id: id, matrix: ss}
+	m.matrix[r][c] = v
+	return true
 }
 
-func (m Matrix) Insert() {
+func (m *Matrix) Insert() {
 	//Creates a matrix
 	fmt.Print("inserting....")
 	for i := range m.matrix {
 		for j := range m.matrix[i] {
-			m.matrix[i][j] = generate_random_num()
+			m.Set(i, j, generate_random_num())
 		}
 	}
+}
+
+func (m *Matrix) ToString() (result string) {
+	// Use this , since client can write the outout
+	// to a file.
+	//result := ""
+	iterate(m, func(i int, j int) {
+		delim := "\t"
+		if j == len(m.matrix[0])-1 {
+			delim = "\n"
+		}
+		result += fmt.Sprintf("%d%s", m.matrix[i][j], delim)
+	})
+	result += "\n"
+	return
+}
+
+func generate_random_num() int {
+	return rand.Intn(100)
+}
+
+func increment() {
+	id++
 }
 
 func isValid() bool {
@@ -104,25 +134,10 @@ func Add(m1 Matrix, m2 Matrix) Matrix {
 	return m
 }
 
-func iterate(m Matrix, opfunc func(int, int)) {
+func iterate(m *Matrix, opfunc func(int, int)) {
 	for i := range m.matrix {
 		for j := range m.matrix[i] {
 			opfunc(i, j)
 		}
 	}
-}
-
-func (m Matrix) ToString() (result string) {
-	// Use this , since client can write the outout
-	// to a file.
-	//result := ""
-	iterate(m, func(i int, j int) {
-		delim := "\t"
-		if j == len(m.matrix[0])-1 {
-			delim = "\n"
-		}
-		result += fmt.Sprintf("%d%s", m.matrix[i][j], delim)
-	})
-	result += "\n"
-	return
 }

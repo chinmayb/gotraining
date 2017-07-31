@@ -18,6 +18,7 @@ const (
 func main() {
 	//matrices := make(ops.Matrices, 0) //runtime call
 	matrices := ops.Matrices{} //compile
+
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Println("\nEnter the operation to perform : [ ",
@@ -34,16 +35,17 @@ func main() {
 				m.Show()
 				//fmt.Println(m.ToString())
 			}
+
 		case ADD:
 			fmt.Println("\n Enter the ids of  first matrix to add")
 			showid1, _ := reader.ReadString('\n')
 			showid1 = showid1[:len(showid1)-1]
 			fmt.Println("\n Enter the ids of  second matrix to add")
 			showid2, _ := reader.ReadString('\n')
-			showid2 = showid2[:len(showid1)-1]
-
+			showid2 = showid2[:len(showid2)-1]
 			matrices = append(matrices, ops.Add(matrices[0], matrices[1]))
 		case SUB:
+			matrices[0].Set(1, 1, 1999)
 			matrices = append(matrices, ops.Subtract(matrices[0], matrices[1]))
 		case EXIT:
 			os.Exit(0)
