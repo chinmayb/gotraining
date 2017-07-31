@@ -37,4 +37,8 @@ func test() {
 	sl1 = append(sl1, "Y")
 
 	fmt.Printf("slice %s  arr : %s", sl1, ar1) //ar1 remains the same, sl1 expands
+
+	var sl1[][]int
+	
+
 }

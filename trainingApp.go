@@ -22,6 +22,6 @@ func main() {
 	//counter.COUNT = 5
 	//counter.Show()
 	//first.Arrayoperations()
-	//first.SliceOperations()
-	first.MadMaps()
+	first.SliceOperations()
+	//first.MadMaps()
 }

@@ -16,8 +16,3 @@ func MadMaps() {
 	}
 }
 
-//write me a lib to matrices
-//create, takes dimension, 
-// slice of slices. slices of ints
-// add , takees two matrices
-//
