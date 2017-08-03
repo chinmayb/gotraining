@@ -14,5 +14,6 @@ func MadMaps() {
 	v3 := map[string]int {
 		"k1": 21,
 	}
+    fmt.Println(v3)
 }
 
