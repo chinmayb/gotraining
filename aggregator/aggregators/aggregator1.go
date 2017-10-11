@@ -2,15 +2,15 @@ package aggregators
 
 type SumAggregator struct {
 	accumulator int
-	count		int
+	count       int
 }
 
-func (ag *SumAggregator)Reset() {
-	ag.accumulator, ag.count = 0,0
+func (ag *SumAggregator) Reset() {
+	ag.accumulator, ag.count = 0, 0
 
 }
 
-func (ag *SumAggregator)Take(num int) {
+func (ag *SumAggregator) Take(num int) {
 	ag.accumulator += num
 	ag.count++
 }
