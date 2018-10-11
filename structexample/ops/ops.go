@@ -1,12 +1,12 @@
 package ops
 
 import "fmt"
-import "os"
+//import "os"
 
 type Person struct {
-    Name string
-    Age int
-    Telephone string
+    Name string `json:"name"`
+    Age int     `json:"age"`
+    Telephone string `json:"phone_number"`
 }
 
 type People []Person

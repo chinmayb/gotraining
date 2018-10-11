@@ -4,6 +4,7 @@ package main
 import "fmt"
 import "./ops"
 import "os"
+import "encoding/json"
 
 var personname string = "Person"
 var Age int = 10
@@ -37,8 +38,20 @@ func main() {
         name, age, tel := generatePeople(i)
         ppl[i] = ops.New(name, age, tel)
     }
+    //writeToFile(ppl)
+
+    result, _ := json.Marshal(ppl)
+    jsonstr := string(result) //byte array to slice
+    fmt.Println(jsonstr)
+
+
+    js := `{"Name": "Mohan", "age": 55, "phone_number": "12345678129"}`
+    var super1 ops.Person
+    json.Unmarshal([]byte(js), &super1)
+    fmt.Println(super1)
+    ppl = append(ppl, super1)
     fmt.Printf("%v", ppl)
-    writeToFile(ppl)
 }
+
 
 // use Fprintf , write to a writer

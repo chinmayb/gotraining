@@ -10,4 +10,9 @@ This contains trainingApp which calls other packages
 * create, takes dimension, 
     slice of slices. slices of ints
 * add , takes two matrices, return matrices and bool
-* multiply [costs more]
+* multiply
+
+Read about : 
+* effective go
+* lang spec
+* 

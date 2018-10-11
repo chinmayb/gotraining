@@ -38,7 +38,7 @@ func test() {
 
 	fmt.Printf("slice %s  arr : %s", sl1, ar1) //ar1 remains the same, sl1 expands
 
-	var sl1[][]int
-	
+//	var sl1[][]int
+
 
 }
