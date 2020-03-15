@@ -34,14 +34,3 @@ func main() {
 	callSimple("case :1 Simple", nums, summer)
 
 }
-
-
-func partitioned(nums []int, parts int, ag ao.Aggregator) {
-	partsize := len(nums) / parts
-	leftover := len(nums) % parts
-	index  := 0
-
-	for i:= 0; i < parts;i++ {
-
-	}
-}

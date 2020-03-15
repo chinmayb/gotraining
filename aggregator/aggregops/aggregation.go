@@ -24,8 +24,3 @@ func Simple(nums []int, agg Aggregator) (int, int) {
 	}*/
 	return result, count
 }
-
-func Partitioned(nums []int, agg Aggregator) (int, int){
-    Aggregate
-	return 0, 0
-}
