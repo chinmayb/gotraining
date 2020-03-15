@@ -19,7 +19,6 @@ func New(n int) *Tree {
 		t = Insert(t, data)
 	}
 	return t
-
 }
 
 func Insert(t *Tree, data int) *Tree {
@@ -32,7 +31,6 @@ func Insert(t *Tree, data int) *Tree {
 	}
 	t.Right = Insert(t.Right, data)
 	return t
-
 }
 
 func PreOrder(t *Tree) {
