@@ -4,7 +4,6 @@ import ops "./linkedlistops"
 import "fmt"
 
 func main() {
-
 	//ll := ops.LinkedList{}
 	data1 := "a"
 	data2 := "b"

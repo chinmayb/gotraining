@@ -2,12 +2,11 @@ package linkedlistops
 
 import "fmt"
 
-// type LinkedListOperators interface {
-// 	Remove()
-// 	Append()
-// 	Prepend()
-// 	Show()
-// }
+type LinkedListOperators interface {
+	Remove()
+	Append(node *Node)
+	Prepend(node *Node)
+}
 
 type Node struct {
 	Data interface{}
@@ -22,16 +21,7 @@ type LinkedList struct {
 	head *Node
 }
 
-func ShowNode(n *Node) (result string) {
-	temp := n
-	for temp != nil {
-		result += fmt.Sprintf("%v -> ", temp.Data)
-		temp = temp.link
-	}
-	return
-}
-
-func (l LinkedList) Show() string {
+func (l LinkedList) String() string {
 	if l.head == nil {
 		return ""
 	}

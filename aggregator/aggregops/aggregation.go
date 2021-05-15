@@ -12,7 +12,7 @@ type Multiplier interface {
 
 func Simple(nums []int, agg Aggregator) (int, int) {
 	agg.Reset()
-	for _,v := range nums {
+	for _, v := range nums {
 		agg.Take(v)
 	}
 	result, count := agg.Aggregate()
