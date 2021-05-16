@@ -1,60 +1,43 @@
 package root
 
 import (
-	"context"
-	"encoding/json"
 	"fmt"
-	"io"
-	"io/ioutil"
 	"net/http"
 
-	"github.com/chinmayb/gotraining/cobraproject/pkg/notepad"
 	"github.com/gorilla/mux"
+
+	"github.com/chinmayb/gotraining/cobraproject/pkg/notepad"
 )
 
-func HTTPError(body interface{}, err error, w http.ResponseWriter) {
-	body := &errorBody{
-		Error: err.Error(),
-	}
-	buf, merr := json.Marshal(body)
-	if merr != nil {
-		log.Infof("Failed to marshal error message %q: %v", body, merr)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-}
+// func HTTPError(body interface{}, err error, w http.ResponseWriter) {
+// 	body = &errorutil.ErrorBody{
+// 		Error: err.Error(),
+// 	}
+// 	buf, merr := json.Marshal(body)
+// 	if merr != nil {
+// 		log.Infof("Failed to marshal error message  %v", merr.Error())
+// 		w.WriteHeader(http.StatusInternalServerError)
+// 		return
+// 	}
+// 	_, err := w.Write(buf)
+//
+// }
 
-func Register(addr string, port int, server notepad.NotePadServer) error {
+func Register(addr string, port string) error {
 	r := mux.NewRouter()
-	s := r.PathPrefix("/notepad").Subrouter()
-	s.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		resp, err := server.List(ctx)
+	h := &handler{notepad.NewNotePadServer()}
 
-	}).Methods("GET")
-
-	s.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var createReq notepad.NotePad
-		b, err := ioutil.ReadAll(req.Body)
-		if err != nil {
-			w.Write([]byte(fmt.Sprintf("%v", err)))
-			return
-		}
-		if err := json.Unmarshal(b, &createReq); err != nil {
-			w.Write([]byte(fmt.Sprintf("%v", err)))
-			return
-		}
-		resp, err := server.Create(ctx, &createReq)
-
-	}).Methods("POST")
-
+	r.PathPrefix("/api/v1/").Subrouter()
+	han := Handler(r, h)
 	srv := &http.Server{
-		Handler: r,
+		Handler: han,
 		Addr:    fmt.Sprintf("%s:%s", addr, port),
 	}
+	return srv.ListenAndServe()
+}
 
-	return nil
+func Handler(router *mux.Router, server *handler) http.Handler {
+	router.HandleFunc("notepad", server.createNotepad).Methods("POST")
+	router.HandleFunc("notepads", server.listNotepad).Methods("GET")
+	return router
 }

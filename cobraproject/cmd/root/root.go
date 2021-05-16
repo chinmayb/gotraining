@@ -1,11 +1,15 @@
 package root
 
 import (
+	"flag"
 	"fmt"
-	"net/http"
+	"os"
 
 	"github.com/spf13/cobra"
+)
 
+const (
+	defaultPort = "8080"
 )
 
 func NewRootCommand() cobra.Command {
@@ -27,12 +31,18 @@ func NewRootCommand() cobra.Command {
 		// PersistentPostRun: func(cmd *cobra.Command, args []string) {
 		// 	fmt.Printf("Inside rootCmd PersistentPostRun with args: %v\n", args)
 		// },
+		Run: func(cmd *cobra.Command, args []string) {
+			fAddr := flag.CommandLine.Lookup("addr")
+			fPort := flag.CommandLine.Lookup("port")
+			fPort.Value.Set(defaultPort)
+			if err := Register(fAddr.Value.String(), fPort.Value.String()); err != nil {
+				fmt.Printf("error %v", err)
+				os.Exit(1)
+			}
+		},
 	}
-	var cmdHTTPServer = &cobra.Command{
-			Run:
-		}
+
 	// rootCMd.SetArgs
 	rootCMd.AddCommand()
 	return rootCMd
 }
-
